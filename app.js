@@ -19,10 +19,12 @@ const app = {
 
     const favBtn = this.makeFavButton()
     item.appendChild(favBtn)
-    const delBtn = this.makeDelButton()
-    item.appendChild(delBtn)
     const upBtn = this.makeUpButton()
     item.appendChild(upBtn)
+    const downBtn = this.makeDownButton()
+    item.appendChild(downBtn)
+    const delBtn = this.makeDelButton()
+    item.appendChild(delBtn)
 
     item.id = 'list'
 
@@ -77,6 +79,19 @@ const app = {
     upBtn.appendChild(innerText)
     //upBtn.addEventListener('click', this.handleUp.bind(this))
     upBtn.value = false
+
+    return upBtn
+  },
+
+  makeDownButton() {
+    const downBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u25bc')
+    downBtn.className = 'upArrow'
+    downBtn.appendChild(innerText)
+    //upBtn.addEventListener('click', this.handleDown.bind(this))
+    downBtn.value = false
+
+    return downBtn
   },
 
   handleFavorite() {
