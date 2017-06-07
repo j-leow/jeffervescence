@@ -13,76 +13,86 @@ const app = {
       .addEventListener('submit', this.addFlick.bind(this))  //This will pass in whatever formSelector that is passed through the caller app.init()
   },      //**DONT FORGET THE COMMA!
 
-    makeFavButton() {
-      const favBtn = document.createElement('button')
-      const innerText = document.createTextNode('\u2665')
-      favBtn.className = 'favorite'
-      favBtn.appendChild(innerText)
-      favBtn.value = false
-      favBtn.addEventListener('click', this.handleFavorite.bind(this))
+  makeFavButton() {
+    const favBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u2665')
+    favBtn.className = 'favorite'
+    favBtn.appendChild(innerText)
+    favBtn.value = false
+    favBtn.addEventListener('click', this.handleFavorite.bind(this))
 
-      return favBtn
-    },
+    return favBtn
+  },
 
-    makeDelButton() {
-      const delBtn = document.createElement('button')
-      const innerText = document.createTextNode('\u00d7')
-      delBtn.className = 'delete'
-      delBtn.appendChild(innerText)
-      delBtn.value = false
-      delBtn.addEventListener('click', this.handleDelete.bind(this))
-      delBtn.id = 'list'
+  makeDelButton() {
+    const delBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u00d7')
+    delBtn.className = 'delete'
+    delBtn.appendChild(innerText)
+    delBtn.value = false
+    delBtn.addEventListener('click', this.handleDelete.bind(this))
+    delBtn.id = 'list'
 
-      return delBtn
-    },
+    return delBtn
+  },
 
-    makeUpButton() {
-      const upBtn = document.createElement('button')
-      const innerText = document.createTextNode('\u25b2')
-      upBtn.className = 'upArrow'
-      upBtn.appendChild(innerText)
-      //upBtn.addEventListener('click', this.handleUp.bind(this))
-      upBtn.value = false
+  makeUpButton() {
+    const upBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u25b2')
+    upBtn.className = 'upArrow'
+    upBtn.appendChild(innerText)
+    upBtn.addEventListener('click', this.handleUp.bind(this))
+    upBtn.value = false
 
-      return upBtn
-    },
+    return upBtn
+  },
 
-    makeDownButton() {
-      const downBtn = document.createElement('button')
-      const innerText = document.createTextNode('\u25bc')
-      downBtn.className = 'upArrow'
-      downBtn.appendChild(innerText)
-      //upBtn.addEventListener('click', this.handleDown.bind(this))
-      downBtn.value = false
+  makeDownButton() {
+    const downBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u25bc')
+    downBtn.className = 'upArrow'
+    downBtn.appendChild(innerText)
+    //upBtn.addEventListener('click', this.handleDown.bind(this))
+    downBtn.value = false
 
-      return downBtn
-    },
+    return downBtn
+  },
 
-    handleFavorite(ev) {
-      ev.preventDefault()
-      const favorite = ev.target
+  handleFavorite(ev) {
+    ev.preventDefault()
+    const favorite = ev.target
 
-      if (favorite.value === 'false') {
-        favorite.style.backgroundColor = '#db4141'
-        favorite.style.borderColor = "#db4141"
-        favorite.style.color = '#ffdd02'
-        favorite.value = true
-      }
+    if (favorite.value === 'false') {
+      favorite.style.backgroundColor = '#db4141'
+      favorite.style.borderColor = "#db4141"
+      favorite.style.color = '#ffdd02'
+      favorite.value = true
+    }
 
-      else if (favorite.value === 'true') {
-        favorite.style.backgroundColor = null
-        favorite.style.borderColor = null
-        favorite.style.color = null
-        favorite.value = false
-      }
-    },
+    else if (favorite.value === 'true') {
+      favorite.style.backgroundColor = null
+      favorite.style.borderColor = null
+      favorite.style.color = null
+      favorite.value = false
+    }
+  },
 
-    handleDelete(ev) {
+  handleDelete(ev) {
       ev.preventDefault()
       const delBtn = ev.target
       const remElement = document.getElementById(delBtn.id)
       remElement.remove()
     },
+
+  handleUp(ev) {
+    ev.preventDefault()
+    const UpBtn = ev.target
+    const thisItem = UpBtn.parentElement
+    const nextItem = UpBtn.siblingElement
+    const prevItem = UpBtn.previousSibling
+
+    
+  },
 
   renderListItem(flick) {
     const item = document.createElement('li')
