@@ -86,12 +86,13 @@ const app = {
 
   handleUp(ev) {
     ev.preventDefault()
-    const UpBtn = ev.target
-    const thisItem = UpBtn.parentElement
-    const nextItem = UpBtn.siblingElement
-    const prevItem = UpBtn.previousSibling
+    const upBtn = ev.target
+    const thisItem = upBtn.parentElement
+    const nextItem = upBtn.siblingElement
+    const prevItem = upBtn.previousSibling
 
-    
+    if (upBtn.values === 'false' && nextItem != null)
+      this.list.insertBefore(nextItem, previousItem)
   },
 
   renderListItem(flick) {
