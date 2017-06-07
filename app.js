@@ -13,6 +13,16 @@ const app = {
       .addEventListener('submit', this.addFlick.bind(this))  //This will pass in whatever formSelector that is passed through the caller app.init()
   },      //**DONT FORGET THE COMMA!
 
+  renderListItem(flick) {
+    const item = document.createElement('li')
+    item.textContent = flick.name
+
+    const favBtn = this.makeFavButton()
+    item.appendChild(favBtn)
+
+    return item
+  },
+
   addFlick(ev) {
     ev.preventDefault()
     const f = ev.target
@@ -23,16 +33,12 @@ const app = {
     }
 
     const listItem = this.renderListItem(flick)
+
     this.list.appendChild(listItem)
+
     this.flicks.push(listItem)
 
     ++ this.max
-  },
-
-  renderListItem(flick) {
-    const item = document.createElement('li')
-    item.textContent = flick.name
-    return item
   },
 
   makeFavButton() {
@@ -42,11 +48,13 @@ const app = {
     favBtn.appendChild(innerText)
     favBtn.value = false
     favBtn.addEventListener('click', this.handleFavorite)
+
+    return favBtn
   },
 
   handleFavorite() {
-    
-  }
+
+  },
 
 
 }
