@@ -34,6 +34,21 @@ const app = {
     item.textContent = flick.name
     return item
   },
+
+  makeFavButton() {
+    const favBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u2665')
+    favBtn.className = "favorite"
+    favBtn.appendChild(innerText)
+    favBtn.value = false
+    favBtn.addEventListener('click', this.handleFavorite)
+  },
+
+  handleFavorite() {
+    
+  }
+
+
 }
 
 app.init({
