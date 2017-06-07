@@ -19,6 +19,12 @@ const app = {
 
     const favBtn = this.makeFavButton()
     item.appendChild(favBtn)
+    const delBtn = this.makeDelButton()
+    item.appendChild(delBtn)
+    const upBtn = this.makeUpButton()
+    item.appendChild(upBtn)
+
+    item.id = 'list'
 
     return item
   },
@@ -44,12 +50,33 @@ const app = {
   makeFavButton() {
     const favBtn = document.createElement('button')
     const innerText = document.createTextNode('\u2665')
-    favBtn.className = "favorite"
+    favBtn.className = 'favorite'
     favBtn.appendChild(innerText)
     favBtn.value = false
-    favBtn.addEventListener('click', this.handleFavorite)
+    favBtn.addEventListener('click', this.handleFavorite.bind(this))
 
     return favBtn
+  },
+
+  makeDelButton() {
+    const delBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u00d7')
+    delBtn.className = 'delete'
+    delBtn.appendChild(innerText)
+    delBtn.value = false
+  //  delBtn.addEventListener('click', this.handleDelete.bind(this))
+    delBtn.id = 'list'
+
+    return delBtn
+  },
+
+  makeUpButton() {
+    const upBtn = document.createElement('button')
+    const innerText = document.createTextNode('\u25b2')
+    upBtn.className = 'upArrow'
+    upBtn.appendChild(innerText)
+    //upBtn.addEventListener('click', this.handleUp.bind(this))
+    upBtn.value = false
   },
 
   handleFavorite() {
