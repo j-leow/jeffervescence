@@ -30,7 +30,7 @@ const app = {
       delBtn.className = 'delete'
       delBtn.appendChild(innerText)
       delBtn.value = false
-    //  delBtn.addEventListener('click', this.handleDelete.bind(this))
+      delBtn.addEventListener('click', this.handleDelete.bind(this))
       delBtn.id = 'list'
 
       return delBtn
@@ -75,6 +75,13 @@ const app = {
         favorite.style.color = null
         favorite.value = false
       }
+    },
+
+    handleDelete(ev) {
+      ev.preventDefault()
+      const delBtn = ev.target
+      const remElement = document.getElementById(delBtn.id)
+      remElement.remove()
     },
 
   renderListItem(flick) {
