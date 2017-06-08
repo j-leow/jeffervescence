@@ -30,9 +30,8 @@ const app = {
     delBtn.className = 'delete'
     delBtn.appendChild(innerText)
     delBtn.value = false
-    delBtn.addEventListener('click', this.handleDelete.bind(this))
     delBtn.id = 'list'
-
+    delBtn.addEventListener('click', this.handleDelete.bind(this))
     return delBtn
   },
 
@@ -41,8 +40,8 @@ const app = {
     const innerText = document.createTextNode('\u25b2')
     upBtn.className = 'upArrow'
     upBtn.appendChild(innerText)
-    upBtn.addEventListener('click', this.handleUp.bind(this))
-    upBtn.value = false
+    upBtn.value = '0'
+    upBtn.addEventListener('click', this.handleMove.bind(this))
 
     return upBtn
   },
@@ -50,10 +49,10 @@ const app = {
   makeDownButton() {
     const downBtn = document.createElement('button')
     const innerText = document.createTextNode('\u25bc')
-    downBtn.className = 'upArrow'
+    downBtn.className = 'downArrow'
     downBtn.appendChild(innerText)
-    //upBtn.addEventListener('click', this.handleDown.bind(this))
-    downBtn.value = false
+    downBtn.value = '1'
+    downBtn.addEventListener('click', this.handleMove.bind(this))
 
     return downBtn
   },
@@ -78,21 +77,31 @@ const app = {
   },
 
   handleDelete(ev) {
-      ev.preventDefault()
-      const delBtn = ev.target
-      const remElement = document.getElementById(delBtn.id)
-      remElement.remove()
+    const delBtn = ev.target
+    delBtn.parentElement.outerHTML = ""
     },
 
-  handleUp(ev) {
+  handleMove(ev) {
     ev.preventDefault()
-    const upBtn = ev.target
-    const thisItem = upBtn.parentElement
-    const nextItem = upBtn.siblingElement
-    const prevItem = upBtn.previousSibling
+    const btn = ev.target
+    const thisItem = btn.parentElement
+    const nextItem = thisItem.nextSibling
+    const prevItem = thisItem.previousSibling
 
-    if (upBtn.values === 'false' && nextItem != null)
-      this.list.insertBefore(nextItem, previousItem)
+    if (btn.value === '0' && prevItem != null) {
+      this.list.insertBefore(thisItem, prevItem)
+    }
+
+    else if (btn.value === '1' && nextItem != null) {
+      this.list.insertBefore(prevItem, thisItem)
+    }
+  },
+
+  deleteAll(ev) {
+    ev.preventDefault()
+    const delBtn = ev.target
+    const remElement = document.getElementById(this.list.id)
+    remElement.remove()
   },
 
   renderListItem(flick) {
