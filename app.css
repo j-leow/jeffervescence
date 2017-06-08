@@ -1,0 +1,5 @@
+/* Custom CSS to override Foundation */
+
+.template {
+  visibility: hidden;
+}

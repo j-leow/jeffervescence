@@ -107,7 +107,13 @@
 //     const item = document.createElement('li')
 //     item.textContent = flick.name
 //
-//     const favBtn = this.makeFavButton()
+//     const favBtn = this.makeFavButton()renderListItem(flick) {
+  //   const template = document.querySelector('.flick.template') //We don't need to create a new li anymore because we've already made the li in the HTML. Instead, we will just select the HTML li that we've created
+  //   // const item = document.createElement('li')
+  //   item.textContent = flick.name
+  //   item.dataset.id = flick.id    //Add data attribute to each list item. Makes it easier to look for it using querySelector.
+  //   return item
+  // },
 //     item.appendChild(favBtn)
 //     const upBtn = this.makeUpButton()
 //     item.appendChild(upBtn)
@@ -118,7 +124,12 @@
 //
 //     item.id = 'list'
 //
-//     return item
+//     return it  //   const template = document.querySelector('.flick.template') //We don't need to create a new li anymore because we've already made the li in the HTML. Instead, we will just select the HTML li that we've created
+  //   // const item = document.createElement('li')
+  //   item.textContent = flick.name
+  //   item.dataset.id = flick.id    //Add data attribute to each list item. Makes it easier to look for it using querySelector.
+  //   return item
+  // },
 //   },
 //
 //   addFlick(ev) {
@@ -146,23 +157,18 @@
 //
 // })
 
-
 //DAY 4
-
 const app = {
   init(selectors) {
     this.flicks = []
     this.max = 0
-    this.list = document.querySelector(selectors.listSelector)
+    this.list = document
+      .querySelector(selectors.listSelector)
+    this.template = document
+      .querySelector(selectors.templateSelector)
     document
       .querySelector(selectors.formSelector)
       .addEventListener('submit', this.addFlick.bind(this))
-
-      //This makes the browser automatically go to the input so you can start typing. Another way is to just change the HTML5 function.
-    // document
-    //   .querySelector(selectors.formSelector)
-    //   .flickName
-    //   .focus()
   },
 
   addFlick(ev) {
@@ -173,28 +179,31 @@ const app = {
       name: f.flickName.value,
     }
 
-    // this.flicks.push(flick)
-    this.flicks.unshift(flick) //Opposite of push
+    this.flicks.unshift(flick)
 
     const listItem = this.renderListItem(flick)
     // this.list.appendChild(listItem)
     this.list
-      .insertBefore(listItem, this.list.firstChild)  //listItem is the current item, we want it to go before the parentNode which is 'list'. We can use several things such as previousSibling, firstChild, or childNode[0] which will get the current item to prepend to the front of the list.
+      .insertBefore(listItem, this.list.firstChild)
 
     ++ this.max
-
     f.reset()
   },
 
   renderListItem(flick) {
-    const item = document.createElement('li')
-    item.textContent = flick.name
-    item.dataset.id = flick.id    //Add data attribute to each list item. Makes it easier to look for it using querySelector.
+    const item = this.template.cloneNode(true)
+    item.classList.remove('template')
+    item.dataset.id = flick.id
+    item
+      .querySelector('.flick-name')
+      .textContent = flick.name
+
     return item
   },
 }
 
 app.init({
   formSelector: '#flick-form',
-  listSelector: '#flick-list'
+  listSelector: '#flick-list',
+  templateSelector: '.flick.template',
 })
