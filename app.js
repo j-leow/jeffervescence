@@ -173,10 +173,13 @@ const app = {
       name: f.flickName.value,
     }
 
-    this.flicks.push(flick)
+    // this.flicks.push(flick)
+    this.flicks.unshift(flick) //Opposite of push
 
     const listItem = this.renderListItem(flick)
-    this.list.appendChild(listItem)
+    // this.list.appendChild(listItem)
+    this.list
+      .insertBefore(listItem, this.list.firstChild)  //listItem is the current item, we want it to go before the parentNode which is 'list'. We can use several things such as previousSibling, firstChild, or childNode[0] which will get the current item to prepend to the front of the list.
 
     ++ this.max
 
@@ -186,7 +189,7 @@ const app = {
   renderListItem(flick) {
     const item = document.createElement('li')
     item.textContent = flick.name
-    item.dataset.id = flick.id
+    item.dataset.id = flick.id    //Add data attribute to each list item. Makes it easier to look for it using querySelector.
     return item
   },
 }
