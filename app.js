@@ -13,6 +13,10 @@ const app = {
       .addEventListener('submit', this.addFlick.bind(this))  //This will pass in whatever formSelector that is passed through the caller app.init()
   },      //**DONT FORGET THE COMMA!
 
+  save() {
+    localStorage.setItem('flicksArray', JSON.stringify(this.flicks))
+  }
+
   makeFavButton() {
     const favBtn = document.createElement('button')
     const innerText = document.createTextNode('\u2665')
@@ -49,7 +53,7 @@ const app = {
   makeDownButton() {
     const downBtn = document.createElement('button')
     const innerText = document.createTextNode('\u25bc')
-    downBtn.className = 'downArrow'
+    downBtn.className = 'dwnArrow'
     downBtn.appendChild(innerText)
     downBtn.value = '1'
     downBtn.addEventListener('click', this.handleMove.bind(this))
@@ -95,13 +99,8 @@ const app = {
     else if (btn.value === '1' && nextItem != null) {
       this.list.insertBefore(prevItem, thisItem)
     }
-  },
 
-  deleteAll(ev) {
-    ev.preventDefault()
-    const delBtn = ev.target
-    const remElement = document.getElementById(this.list.id)
-    remElement.remove()
+    this.save()
   },
 
   renderListItem(flick) {
