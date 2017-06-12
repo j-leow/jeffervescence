@@ -168,10 +168,37 @@ const app = {
       .querySelector(selectors.templateSelector)
     document
       .querySelector(selectors.formSelector)
-      .addEventListener('submit', this.addFlick.bind(this))
+      .addEventListener('submit', this.addFlickViaForm.bind(this))
+
+    this.load()
   },
 
-  addFlick(ev) {
+  load() {
+    // Get the JSON string out of localStorage
+    const flicksJSON = localStorage.getItem('flicks')
+
+    // Turn that into an array
+    const flicksArray = JSON.parse(flicksJSON)
+
+    // Set this.flicks to that array
+    if (flicksArray) {
+      flicksArray
+        .reverse()
+        .map(this.addFlick.bind(this))
+    }
+  },
+
+  addFlick(flick) {
+    const listItem = this.renderListItem(flick)
+    this.list
+      .insertBefore(listItem, this.list.firstChild)
+
+    ++ this.max
+    this.flicks.unshift(flick)
+    this.save()
+  },
+
+  addFlickViaForm(ev) {
     ev.preventDefault()
     const f = ev.target
     const flick = {
@@ -179,15 +206,15 @@ const app = {
       name: f.flickName.value,
     }
 
-    this.flicks.unshift(flick)
+    this.addFlick(flick)
 
-    const listItem = this.renderListItem(flick)
-    // this.list.appendChild(listItem)
-    this.list
-      .insertBefore(listItem, this.list.firstChild)
-
-    ++ this.max
     f.reset()
+  },
+
+  save() {
+    localStorage
+      .setItem('flicks', JSON.stringify(this.flicks))
+
   },
 
   renderListItem(flick) {
@@ -201,6 +228,9 @@ const app = {
     item
       .querySelector('button.remove')
       .addEventListener('click', this.removeFlick.bind(this))
+    item
+      .querySelector('button.fav')
+      .addEventListener('click', this.favFlick.bind(this, flick))
 
     return item
   },
@@ -208,14 +238,22 @@ const app = {
   removeFlick(ev) {
     const listItem = ev.target.closest('.flick')
 
-    //Find the flick in the array
+    // Find the flick in the array, and remove it
     for (let i = 0; i < this.flicks.length; i++) {
       const currentId = this.flicks[i].id.toString()
-      if (listItem.dataset.id === currentId){
-        this.flicks.splice(i, 1) //First arg is the index, second is the number of item to splice
+      if (listItem.dataset.id === currentId) {
+        this.flicks.splice(i, 1)
         break
       }
     }
+
+    listItem.remove()
+    this.save()
+  },
+
+  favFlick(ev) {
+    console.log(arguments)
+    const listItem = ev.target.closest('.flick')
   },
 }
 
